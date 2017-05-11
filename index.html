@@ -9,6 +9,9 @@
         <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 
         <style>
+            body {
+                zoom: 150%; 
+            }
             #container {
                 padding: 50px;
                 background-color: #EEE;
@@ -20,13 +23,27 @@
             }
         </style>
     </head>
-    <body> 
+    <body>
       <div id="container">
 
       </div>
         <script type="text/babel">
+
+            var Buttonify = React.createClass({
+                render: function() {
+                    return (
+                        <div>
+                            <button type={this.props.behavior}>{this.props.children}</button>
+                        </div>
+                    );
+                }
+            });
+
+
             ReactDOM.render(
-              <h1>Chris</h1>,
+              <div>
+                  <Buttonify behavior="Submit">SEND DATA</Buttonify>
+              </div>,
               document.querySelector("#container")
             );
         </script>
