@@ -3,7 +3,7 @@
 <html>
 
 <head>
-  <title>9. Going from Data to UI</title>
+  <title>10. Working With Events</title>
   <script src="https://unpkg.com/react@latest/dist/react.js"></script>
   <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
@@ -19,47 +19,80 @@
 <body>
   <div id="container"></div>
   <script type="text/babel">
-    var Circle = React.createClass({
+
+
+    var Counter = React.createClass({
       render: function() {
-        var circleStyle = {
-          padding: 10,
-          margin: 20,
-          display: "inline-block",
-          backgroundColor: this.props.bgColor,
-          borderRadius: "50%",
-          width: 100,
-          height: 100,
+        var textStyle = {
+          fontSize: 72,
+          fontFamily: "sans-serif",
+          color: "#333",
+          fontWeight: "bold"
         };
 
         return (
-          <div style={circleStyle}>
+          <div style={textStyle}>
+            {this.props.display}
           </div>
         );
       }
     });
 
-    /*
-    function showCircle() {
-      var colors = ["#393E41", "#E94F37", "#1C89BF", "#A1D363"];
-      var ran = Math.floor(Math.random() * colors.length);
-      return <Circle bgColor={colors[ran]}/>;
-    };*/
+    var CounterParent = React.createClass({
+      getInitialState: function() {
+        return {
+          count: 0
+        };
+      },
 
-    var colors = ["#393E41", "#E94F37", "#1C89BF", "#A1D363", "#85FFC7", "#297373", "#FF8552", "#A40E4C"];
+      increase: function(e) {
+        var currentCount = this.state.count;
 
-    var renderData = [];
+        if (e.shiftKey) {
+          currentCount += 10;
+        } else {
+          currentCount += 1;
+        }
 
-    for (var i = 0; i < colors.length; i++) {
-      var color = colors[i];
+        this.setState({
+          count: currentCount
+        });
+      },
 
-      renderData.push(<Circle key={i + color} bgColor={color}/>);
-    }
+      render: function() {
+        var backgroundStyle = {
+          padding: 50,
+          backgroundColor: "#FFC53A",
+          width: 250,
+          height: 100,
+          borderRadius: 10,
+          textAlign: "center"
+        };
+
+        var buttonStyle = {
+          fontSize: "1em",
+          width: 30,
+          height: 30,
+          fontFamily: "sans-serif",
+          color: "#333",
+          fontWeight: "bold",
+          lineHeight: "3px"
+        };
+
+        return (
+          <div style={backgroundStyle}>
+            <Counter display={this.state.count}/>
+            <button onClick={this.increase} style={buttonStyle}>+</button>
+          </div>
+        );
+      }
+    });
 
     var destination = document.querySelector("#container");
 
     ReactDOM.render(
       <div>
-        {renderData}
+        <CounterParent/>
       </div>,
       destination
     );
